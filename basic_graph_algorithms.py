@@ -59,11 +59,7 @@ def get_weight_scheme_DICT_OF_DICTs(filepath):
     return successors_with_weight_scheme
 
 
-def get_edges_with_weights_DICT(filepath):
-    graph_type = input(CRED2 + "is graph directed? (yes / no (is default))\n\tanswer: " + CEND)
-    directed = False
-    if graph_type == 'yes':
-        directed = True
+def get_edges_with_weights_DICT(filepath, directed=False):
     weight_scheme_list_start_from_0 = get_weight_scheme_LIST_OF_LISTs(filepath)
     edges_with_weights_scheme = {}
     if len(weight_scheme_list_start_from_0)>0:
@@ -71,7 +67,7 @@ def get_edges_with_weights_DICT(filepath):
             if len(node_weights_info)>0:
                 for node_index_column, edge_weight in enumerate(node_weights_info):
                     edge = (node_index_row+1, node_index_column+1)
-                    if (edge_weight != '0' and edge_weight != float('inf')) and \
+                    if (edge_weight != 0 and edge_weight != float('inf')) and \
                             (not directed and (edge[::-1] not in edges_with_weights_scheme.keys())):
                         edges_with_weights_scheme[edge] = int(edge_weight)
     return edges_with_weights_scheme
@@ -112,28 +108,32 @@ def task01():
     graph_files = ['graph.txt', 'graph0.txt']
     for filepath in graph_files:
         # TASK a
-        print("\n" + CYELLOWBG + "\tWEIGHT SCHEME" + CEND)
+        print("\n" + CYELLOWBG + "\tWEIGHT SCHEME\t" + CEND)
         print(get_weight_scheme_LIST_OF_LISTs(filepath))
 
         # TASK b
-        print("\n" + CYELLOWBG + "\tSUCCESSORS SCHEME" + CEND)
+        print("\n" + CYELLOWBG + "\tSUCCESSORS SCHEME\t" + CEND)
         print(get_successors_scheme_DICT_OF_LISTs(filepath))
 
         # TASK c
-        print("\n" + CYELLOWBG + "\tSUCCESSORS WITH WEIGHTS SCHEME" + CEND)
+        print("\n" + CYELLOWBG + "\tSUCCESSORS WITH WEIGHTS SCHEME\t" + CEND)
         print(get_weight_scheme_DICT_OF_DICTs(filepath))
 
         # TASK d
-        print("\n" + CYELLOWBG + "\tEDGES WITH WEIGHTS SCHEME" + CEND)
+        print("\n" + CYELLOWBG + "\tEDGES WITH WEIGHTS SCHEME\t" + CEND)
         print(get_edges_with_weights_DICT(filepath))
 
         # TASK e
+        print("\n" + CYELLOWBG + "\tLIST OF SUCCESSORS, GOOD VIEW\t" + CEND)
         get_successors_scheme_DICT_OF_LISTs_good_view(filepath)
 
         # TASK f
-        print("\n" + CYELLOWBG + "\tSTEPS SEQUENCES (desc sort)" + CEND)
-        print(graph_steps_sequence_DES_SORT(filepath))
-        print("\n" + CYELLOWBG + "\tEDGES COUNT" + CEND)
+        print("\n" + CYELLOWBG + "\tSTEPS SEQUENCES (desc sort)\t" + CEND)
+        print(" ".join(str(step) for step in graph_steps_sequence_DES_SORT(filepath)))
+        print("\n" + CYELLOWBG + "\tEDGES COUNT\t" + CEND)
         print(graph_number_of_edges(filepath))
-        print("\n" + CYELLOWBG + "\tSUM OF EDGES WEIGHTS" + CEND)
+        print("\n" + CYELLOWBG + "\tSUM OF EDGES WEIGHTS\t" + CEND)
         print(graph_edges_weights_sum(filepath))
+
+
+task01()
