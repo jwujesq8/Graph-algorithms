@@ -134,6 +134,3 @@ def task01():
         print(graph_number_of_edges(filepath))
         print("\n" + CYELLOWBG + "\tSUM OF EDGES WEIGHTS\t" + CEND)
         print(graph_edges_weights_sum(filepath))
-
-
-task01()
