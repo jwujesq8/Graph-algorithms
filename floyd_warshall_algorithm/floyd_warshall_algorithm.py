@@ -1,4 +1,3 @@
-from basic_graph_algorithms import get_weight_scheme_LIST_OF_LISTs
 from copy import deepcopy
 import sys
 from collections import deque
@@ -6,6 +5,33 @@ from collections import deque
 CYELLOWBG = '\33[43m'
 CEND = '\33[0m'
 CRED2 = '\33[91m'
+
+
+def open_and_read_file(filepath):
+    file = open(filepath, 'r', encoding='utf-8')
+    lines = file.readlines()
+    file.close()
+    if len(lines) > 0:
+        return lines
+    else:
+        return list()
+
+
+def get_weight_scheme_LIST_OF_LISTs(filepath):
+    graph_info = open_and_read_file(filepath)
+    weight_scheme = list()
+    if len(graph_info) > 0:
+        for line in graph_info:
+            if len(line) > 0:
+                weights_line_info = line.replace('\n', '').split()
+                for i, weight in enumerate(weights_line_info):
+                    if weight == '-':
+                        weights_line_info[i] = float('inf')
+                    else:
+                        weights_line_info[i] = int(weight)
+                weight_scheme.append(weights_line_info)
+            else: weight_scheme.append(list())
+    return weight_scheme
 
 
 def initial_zeros_parents_matrix(draft):
@@ -86,12 +112,12 @@ def floyd_warshall_algorithm(filepath):
         print(f"\t{row}")
 
     if not negative_cycle:
-        print("shortest paths:")
+        print("\nshortest paths:")
         for i in range(n):
             for j in range(n):
                 print(f"\tfrom {i + 1} to {j + 1}: {find_shortest_path(parents_scheme[last_iter], i, j)}")
 
 
-for file in ["graph05z.txt", "graph05bez.txt"]:
+for file in ["graphNegCycle.txt", "graph.txt"]:
     print(f"\n\n{CYELLOWBG} FILE: {file} {CEND}")
     floyd_warshall_algorithm(file)
